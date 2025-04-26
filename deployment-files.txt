@@ -1,0 +1,55 @@
+# requirements.txt
+streamlit==1.27.0
+pandas==2.0.3
+numpy==1.24.3
+matplotlib==3.7.2
+seaborn==0.12.2
+scikit-learn==1.3.0
+joblib==1.3.2
+pillow==10.0.0
+
+# .streamlit/config.toml
+[theme]
+primaryColor = "#4CAF50"
+backgroundColor = "#FFFFFF"
+secondaryBackgroundColor = "#F0F2F6"
+textColor = "#262730"
+font = "sans serif"
+
+# setup.sh
+#!/bin/bash
+mkdir -p ~/.streamlit/
+echo "[server]
+headless = true
+port = $PORT
+enableCORS = false
+" > ~/.streamlit/config.toml
+
+# Procfile (para Heroku)
+web: sh setup.sh && streamlit run app.py
+
+# Dockerfile
+FROM python:3.9-slim
+
+WORKDIR /app
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+
+EXPOSE 8501
+
+CMD ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+
+# .gitignore
+__pycache__/
+*.py[cod]
+*$py.class
+.streamlit/secrets.toml
+.env
+venv/
+env/
+ENV/
+.idea/
+.DS_Store
