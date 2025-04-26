@@ -24,7 +24,7 @@ st.set_page_config(
 @st.cache_data
 def load_data():
     try:
-        return pd.read_csv(os.path.join(os.getcwd('housing_data.csv')))
+        return pd.read_csv('housing_data.csv')
     except FileNotFoundError:
         st.error("No se encontró el archivo de datos. Por favor, asegúrate de que housing_data.csv existe en el directorio.")
         return None
@@ -32,8 +32,8 @@ def load_data():
 @st.cache_resource
 def load_model():
     try:
-        model = joblib.load(os.path.join(os.getcwd('models/housing_model.pkl')))
-        scaler = joblib.load(os.path.join(os.getcwd('models/scaler.pkl')))
+        model = joblib.load('models/housing_model.pkl')
+        scaler = joblib.load('models/scaler.pkl')
         return model, scaler
     except FileNotFoundError:
         st.error("No se encontraron los archivos del modelo. Asegúrate de que los archivos existen en la carpeta models/.")
