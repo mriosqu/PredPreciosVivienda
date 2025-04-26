@@ -84,6 +84,9 @@ if page == "Inicio":
             plt.xticks(rotation=45)
             st.pyplot(fig)
 
+            st.markdown("### 📈 Estadisticas descriptivas")
+            st.dataframe(df.describe())
+
 # Página de análisis exploratorio
 elif page == "Análisis Exploratorio":
     st.header("Análisis Exploratorio de Datos")
